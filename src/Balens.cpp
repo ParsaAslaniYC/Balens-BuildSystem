@@ -14,7 +14,7 @@
 namespace fs = std::filesystem;
 
 // Default build parameters
-std::string PROJECT_NAME = "[My Retarded Project]";
+std::string PROJECT_NAME = "[My Unnamed Project]";
 std::string BUILD_DIR = "build";
 std::string SRC_DIR = "src";
 std::string INCLUDE_DIR = "include";
@@ -25,6 +25,7 @@ std::string INSTALLATION = "F";
 bool USE_BLSRC = false;
 std::string RESOURCE_FILE = "";
 bool CLEAN_COMMAND = true;
+std::string MULTI_TARGET = "F";
 
 void print(const std::string& msg) {
     std::cout << msg << std::endl;
@@ -39,23 +40,40 @@ int main(int argc, char* argv[]) {
     std::string buildnumber = "BLS1-241103";
     ds.save("balens.info.buildnumber", buildnumber);
 
-    // Search for configuration file with .balens extension
-    std::string configFile;
+    std::vector<std::string> configFiles;
+
+    // Search for configuration files with .balens extension
     for (const auto& entry : fs::directory_iterator(".")) {
         if (entry.path().extension() == ".balens") {
-            configFile = entry.path().string();
-            break;
+            configFiles.push_back(entry.path().string());
         }
     }
 
+    // If there are two or more config files, display a menu. this is multi target project. 
+    if (configFiles.size() > 1) {
+        std::cout << "Multiple targets found. Please choose one:" << std::endl;
+        for (size_t i = 0; i < configFiles.size(); ++i) {
+            std::cout << "[" << i + 1 << "] " << configFiles[i] << std::endl;
+        }
+
+        int choice;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        print("\n\n");
+        parseConfigFile(configFiles[choice - 1]);   
+    } else if (configFiles.size() == 1) {
+        parseConfigFile(configFiles[0]);
+    } else {    
+        // Parse configuration file
+        parseConfigFile(configFiles[0]);
+    }
+
     // Check if the configuration file exists
-    if (configFile.empty()) {
+    if (configFiles.empty()) {
         std::cerr << "\033[31mNo configuration file with .balens extension found in the current directory.\033[0m" << std::endl;
         exit(1);
     }
-
-    // Parse configuration file
-    parseConfigFile(configFile);
 
     // Display Flags Table
     print("=============Balens===============");
