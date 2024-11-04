@@ -1,0 +1,10 @@
+PROJECT_NAME=[Balens Build System - C Demo ]
+BUILD_DIR=cache
+SRC_DIR=demo_two
+INCLUDE_DIR=include
+COMPILER=g++
+FLAGS=
+OUTPUT=c_hello
+INSTALLATION=F
+USE_BLSRC=false
+RESOURCE_FILE=BLSRC
