@@ -1,0 +1,10 @@
+PROJECT_NAME=[Balens Build System]
+BUILD_DIR=cache
+SRC_DIR=src
+INCLUDE_DIR=include
+COMPILER=g++
+FLAGS=-lstdc++fs -std=c++17 -lstdc++
+OUTPUT=balens
+INSTALLATION=T
+USE_BLSRC=false
+RESOURCE_FILE=BLSRC
