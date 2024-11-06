@@ -10,6 +10,7 @@
 #include "link.h"
 #include "BLSRC.h"
 #include "DataShop.hpp"
+#include "loggingSystem.hpp"
 
 namespace fs = std::filesystem;
 
@@ -35,9 +36,11 @@ int main(int argc, char* argv[]) {
     // Parse command-line arguments
     parseArgs(argc, argv);
     Store ds;
+    Logger log;
 
     // Define the buildnumber and save it as a property
-    std::string buildnumber = "BLS1-241103";
+    std::string buildnumber = "BLS1-241103";    
+    log.logMessage(INFO, "Balens BuildSystem with Buildnumber '" + buildnumber + "' started.\n\n");
     ds.save("balens.info.buildnumber", buildnumber);
 
     std::vector<std::string> configFiles;
@@ -48,7 +51,6 @@ int main(int argc, char* argv[]) {
             configFiles.push_back(entry.path().string());
         }
     }
-
     // If there are two or more config files, display a menu. this is multi target project. 
     if (configFiles.size() > 1) {
         std::cout << "Multiple targets found. Please choose one:" << std::endl;
@@ -137,5 +139,6 @@ int main(int argc, char* argv[]) {
     } else {
         std::cout << "\033[33mInstallation is disabled.\033[0m" << std::endl;       
     }
+    log.logMessage(INFO, "Balens exited with code 0.");
     return 0;
 }
