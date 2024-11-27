@@ -77,6 +77,12 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
+#ifdef __linux__
+    std::cout << std::endl << "You're building on Linux" << std::endl << std::endl;
+#elif
+    std::cout << std::endl << "You're building on Windows" << std::endl << std::endl;
+#endif
+
     // Display Flags Table
     print("=============Balens===============");
     print("PROJECT_NAME: " + PROJECT_NAME);
@@ -129,7 +135,17 @@ int main(int argc, char* argv[]) {
 
     if (INSTALLATION == "T") {
         std::cout << "\033[33mInstallation is enabled, installing..\033[0m" << std::endl;
+#ifdef __linux__
+//        std::cout << std::endl << "You're building on Linux" << std::endl;
         std::string Inst_CMD = "sudo cp " + OUTPUT + " /usr/local/bin/" + OUTPUT;
+#elif _WIN32
+//        std::cout << std::endl << "You're building on Windows" << std::endl;
+        std::cout << "\033[33mInstallation unavailable on windows.\033[0m" << std::endl;
+        std::cout << "\033[32mFinished.\033[0m" << std::endl;
+        std::cout << std::endl;
+        log.logMessage(INFO, "Balens exited with code 0W.");
+        exit(01);
+#endif
         if (std::system(Inst_CMD.c_str()) != 0) {
             std::cerr << "\033[31mInstallation failed.\033[0m" << std::endl;
             exit(1);
