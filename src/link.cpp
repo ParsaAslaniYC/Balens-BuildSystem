@@ -8,6 +8,9 @@ extern std::string OUTPUT;
 
 void link(const std::vector<std::string>& obj_files) {
     std::cout << "\033[34mLinking...\033[0m" << std::endl;
+#ifdef _WIN32
+    OUTPUT = OUTPUT + ".exe";
+#endif
     std::string command = COMPILER + " -o " + OUTPUT + " " + FLAGS;
     for (const auto& obj_file : obj_files) {
         command += " " + obj_file;
