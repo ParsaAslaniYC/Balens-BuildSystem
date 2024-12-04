@@ -2,7 +2,10 @@
 #define CONFIG_H
 
 #include <string>
+#include <map>
 
-void parseConfigFile(const std::string& configFile);
+extern std::map<std::string, std::string> config;
+
+void loadConfig(const std::string& filename);
 
 #endif // CONFIG_H
