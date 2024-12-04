@@ -2,7 +2,13 @@
 #define COMPILE_H
 
 #include <string>
+#include <map>
 
-void compile(const std::string& src_file, const std::string& obj_file);
+extern std::map<std::string, std::string> config;
+
+void compileCpp();
+void compileRust();
+void compileCSharp();
+void compileProject();
 
 #endif // COMPILE_H
